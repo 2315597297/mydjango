@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        {%  load staticfiles %}
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+        <link href="{% static 'cz_bolg/summernote.css' %}" rel="stylesheet"/>
+        <style>
+        .note-alarm {
+        float: right;
+        margin-top: 10px;
+        margin-right: 10px;
+        }
+        </style>
+        <link rel='stylesheet' type='text/css' href='{% static 'cz_bolg/checked.min.css' %}' />
+        <link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/normalize.css' %}" />
+{#		<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/checked.min.css' %}fonts/font-awesome-4.2.0/css/font-awesome.min.css" />#}
+		<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/demo.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/component.css' %}" />
+        	<script src="{% static 'cz_bolg/classie.js' %}"></script>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+<script src="{% static 'cz_bolg/summernote.js' %}"></script>
+<script src="{% static 'cz_bolg/lang/summernote-zh-CN.js' %}"></script>    <!-- 中文-->
+<script>
+$(function(){
+    document.getElementsByName("bankuai")[0].checked=true;
+    document.getElementsByName('leixing')[0].checked=true;
+});
+function sb() {
+    var code =$('.summernote').summernote('code')
+    var title = document.getElementById('input-35').value
+    var fm = document.getElementById('fengmian').value
+    if (code==''||title==''||fm==''){
+        alert('请将信息填写完整')
+    }else{
+        document.getElementById('con').value=code;
+        document.getElementById('isfrom').submit()
+    }
+
+}
+</script>
+	<title>分享你的经验</title>
+        {%  load staticfiles %}
+	</head>
+	<body style="background-color:#F5F5F5">
+    <form name = "form" id="isfrom" enctype="multipart/form-data" action = "{% url 'blog:save_blog' %}" method = "POST" >{% csrf_token %}
+        <span class="input input--kaede">
+            <input type = "text" class="input__field input__field--kaede"  name = "title" id="input-35" />
+            <label class="input__label input__label--kaede" for="input-35">
+                <span class="input__label-content input__label-content--kaede">标题</span>
+            </label>
+        </span>
+        <div class="uploader white" style="margin-left: 20px">
+        <input type="text" class="filename" id="filename" readonly/>
+        <input type="button" name="file" class="button"  value="选择博客封面(必填)..."/>
+        <input type="file" name = "picture" id="fengmian" size="30"/>
+        </div>
+        <div style="margin-left: 20px">
+            选择板块
+            {% for b in Bankuai %}
+
+                <label>
+                    <input name="bankuai" type="radio" value="{{ b.id }}"class="checked-vertigo" />{{ b.name }}
+                </label>
+            {% endfor %}
+        </div>
+        <div style="margin-left: 20px">
+            选择文章类型
+            {% for l in Leixing %}
+                <label><input name="leixing" type="radio" value="{{ l.id }}"class="checked-vertigo"  />{{ l.name }}</label>
+            {% endfor %}
+        </div>
+        <input type="text" id="con" style="display:none" name="content"/>
+         <div id="summer" >
+            <div class="summernote">summernote 1</div>
+        </div>
+        <button type="button" style="width: 100%;height: 30px" onclick="sb()">提交</button>
+    </form>
+	</body>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+/* function sendFile(file, editor,welEditable) {
+ console.log("file="+file);
+ console.log("editor="+editor);
+ console.log("welEditable="+welEditable);
+   data = new FormData();
+   data.append("blog_image[image]", file);
+   $.ajax({
+     url: 'blog_images.jsp',
+     data: data,
+     cache: false,
+     contentType: false,
+     processData: false,
+     type: 'POST',
+     success: function(data){
+       editor.insertImage(welEditable, data.url);
+     }
+   });
+ }
+*/
+ $('.summernote').summernote({
+   height: 300, /*高さを指定*/
+   lang: 'zh-CN', // default: 'en-US'
+  focus:true,
+  /*  image: {
+
+         selectFromFiles: '选择文件'
+
+       }, */
+   /*onImageUpload: function(files, editor, welEditable) {
+       sendFile(files[0], editor,welEditable);
+   }*/
+     callbacks: {
+        onInit: null,
+        onFocus: null,
+        onBlur: null,
+        onEnter: null,
+        onKeyup: null,
+        onKeydown: null,
+        onImageUpload: function(files, editor, $editable) {sendFile(files[0],editor,$editable);},
+        onImageUploadError: null
+      },
+{#       onImageUpload: function(files, editor, $editable) {#}
+{#           alert('sdfa')#}
+{#    sendFile(files[0],editor,$editable);#}
+{#    }#}
+
+
+ });
+});
+
+
+function sendFile(file, editor, $editable){
+$(".note-toolbar.btn-toolbar").append('正在上传图片');
+var filename = false;
+try{
+filename = file['name'];
+} catch(e){filename = false;}
+//if(!filename){$(".note-alarm").remove();}
+//以上防止在图片在编辑器内拖拽引发第二次上传导致的提示错误
+var ext = filename.substr(filename.lastIndexOf("."));
+ext = ext.toUpperCase();
+var timestamp = new Date().getTime();
+var name = {{ user.id }}+timestamp+ext;
+//name是文件名，自己随意定义，aid是我自己增加的属性用于区分文件用户
+datas = new FormData();
+datas.append("file", file);
+datas.append("key",name);
+
+  // XMLHttpRequest 对象
+
+            var xhr;
+              if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+                    xhr=new XMLHttpRequest();}
+              else {// code for IE6, IE5
+                    xhr=new ActiveXObject("Microsoft.XMLHTTP");}
+            xhr.open("post", "/blog/up_img", true);
+            xhr.onload = function () {
+                alert('上传成功')
+                $('.summernote').summernote('editor.insertImage', xhr.responseText);
+            };
+            xhr.onerror = function () {
+                alert('上传失败！服务器出问题了？？要不先把文本保存下来')
+            }
+            xhr.send(datas);
+{#data.append("token",$("#summernote").attr('token'));  #}
+{% comment %}$.ajax({
+data:{"file":'sd',"key":name},
+type: "POST",
+url: "/blog/up_img", //图片上传出来的url，返回的是图片上传后的路径，http格式
+contentType:"json",
+cache: false,
+processData: false,
+success: function(data) {
+//data是返回的hash,key之类的值，key是定义的文件名
+alert(data);
+//把图片放到编辑框中。editor.insertImage 是参数，写死。后面的http是网上的图片资源路径。
+//网上很多就是这一步出错。
+$('.summernote').summernote('editor.insertImage', "http://res.cloudinary.com/demo/image/upload/butterfly.jpg");
+
+$(".note-alarm").html("上传成功,请等待加载");
+setTimeout(function(){$(".note-alarm").remove();},3000);
+},
+error:function(){
+$(".note-alarm").html("上传失败");
+setTimeout(function(){$(".note-alarm").remove();},3000);
+}
+});{% endcomment %}
+}
+
+</script>
+</html>
+<style>.uploader{
+position:relative;
+display:inline-block;
+overflow:hidden;
+cursor:default;
+padding:0;
+margin:10px 0px;
+-moz-box-shadow:0px 0px 5px #ddd;
+-webkit-box-shadow:0px 0px 5px #ddd;
+box-shadow:0px 0px 5px #ddd;
+
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+border-radius:5px;
+}
+
+.filename{
+float:left;
+display:inline-block;
+outline:0 none;
+height:32px;
+width:180px;
+margin:0;
+padding:8px 10px;
+overflow:hidden;
+cursor:default;
+border:1px solid;
+border-right:0;
+font:9pt/100% Arial, Helvetica, sans-serif; color:#777;
+text-shadow:1px 1px 0px #fff;
+text-overflow:ellipsis;
+white-space:nowrap;
+
+-moz-border-radius:5px 0px 0px 5px;
+-webkit-border-radius:5px 0px 0px 5px;
+border-radius:5px 0px 0px 5px;
+
+background:#f5f5f5;
+background:-moz-linear-gradient(top, #fafafa 0%, #eee 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#f5f5f5));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#f5f5f5',GradientType=0);
+border-color:#ccc;
+
+-moz-box-shadow:0px 0px 1px #fff inset;
+-webkit-box-shadow:0px 0px 1px #fff inset;
+box-shadow:0px 0px 1px #fff inset;
+
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+box-sizing:border-box;
+}
+
+.button{
+float:left;
+height:32px;
+display:inline-block;
+outline:0 none;
+padding:8px 12px;
+margin:0;
+cursor:pointer;
+border:1px solid;
+font:bold 9pt/100% Arial, Helvetica, sans-serif;
+
+-moz-border-radius:0px 5px 5px 0px;
+-webkit-border-radius:0px 5px 5px 0px;
+border-radius:0px 5px 5px 0px;
+
+-moz-box-shadow:0px 0px 1px #fff inset;
+-webkit-box-shadow:0px 0px 1px #fff inset;
+box-shadow:0px 0px 1px #fff inset;
+}
+
+
+.uploader input[type=file]{
+position:absolute;
+top:0; right:0; bottom:0;
+border:0;
+padding:0; margin:0;
+height:30px;
+cursor:pointer;
+filter:alpha(opacity=0);
+-moz-opacity:0;
+-khtml-opacity: 0;
+opacity:0;
+}
+
+input[type=button]::-moz-focus-inner{padding:0; border:0 none; -moz-box-sizing:content-box;}
+input[type=button]::-webkit-focus-inner{padding:0; border:0 none; -webkit-box-sizing:content-box;}
+input[type=text]::-moz-focus-inner{padding:0; border:0 none; -moz-box-sizing:content-box;}
+input[type=text]::-webkit-focus-inner{padding:0; border:0 none; -webkit-box-sizing:content-box;}
+
+/* White Color Scheme ------------------------ */
+
+.white .button{
+color:#555;
+text-shadow:1px 1px 0px #fff;
+background:#ddd;
+background:-moz-linear-gradient(top, #eeeeee 0%, #dddddd 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#dddddd));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd',GradientType=0);
+border-color:#ccc;
+}
+
+.white:hover .button{
+background:#eee;
+background:-moz-linear-gradient(top, #dddddd 0%, #eeeeee 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#dddddd), color-stop(100%,#eeeeee));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dddddd', endColorstr='#eeeeee',GradientType=0);
+}
+
+/* Blue Color Scheme ------------------------ */
+
+.blue .button{
+color:#fff;
+text-shadow:1px 1px 0px #09365f;
+background:#064884;
+background:-moz-linear-gradient(top, #3b75b4 0%, #064884 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#3b75b4), color-stop(100%,#064884));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3b75b4', endColorstr='#064884',GradientType=0);
+border-color:#09365f;
+}
+
+.blue:hover .button{
+background:#3b75b4;
+background:-moz-linear-gradient(top, #064884 0%, #3b75b4 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#064884), color-stop(100%,#3b75b4));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#064884', endColorstr='#3b75b4',GradientType=0);
+}
+
+/* Green Color Scheme ------------------------ */
+
+.green .button{
+color:#fff;
+text-shadow:1px 1px 0px #6b7735;
+background:#7d8f33;
+background:-moz-linear-gradient(top, #93aa4c 0%, #7d8f33 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#93aa4c), color-stop(100%,#7d8f33));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#93aa4c', endColorstr='#7d8f33',GradientType=0);
+border-color:#6b7735;
+}
+
+.green:hover .button{
+background:#93aa4c;
+background:-moz-linear-gradient(top, #7d8f33 0%, #93aa4c 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d8f33), color-stop(100%,#93aa4c));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d8f33', endColorstr='#93aa4c',GradientType=0);
+}
+
+/* Red Color Scheme ------------------------ */
+
+.red .button{
+color:#fff;
+text-shadow:1px 1px 0px #7e0238;
+background:#90013f;
+background:-moz-linear-gradient(top, #b42364 0%, #90013f 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#b42364), color-stop(100%,#90013f));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#b42364', endColorstr='#90013f',GradientType=0);
+border-color:#7e0238;
+}
+
+.red:hover .button{
+background:#b42364;
+background:-moz-linear-gradient(top, #90013f 0%, #b42364 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#90013f), color-stop(100%,#b42364));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#90013f', endColorstr='#b42364',GradientType=0);
+}
+
+/* Orange Color Scheme ------------------------ */
+
+.orange .button{
+color:#fff;
+text-shadow:1px 1px 0px #c04501;
+background:#d54d01;
+background:-moz-linear-gradient(top, #f86c1f 0%, #d54d01 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#f86c1f), color-stop(100%,#d54d01));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f86c1f', endColorstr='#d54d01',GradientType=0);
+border-color:#c04501;
+}
+
+.orange:hover .button{
+background:#f86c1f;
+background:-moz-linear-gradient(top, #d54d01 0%, #f86c1f 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#d54d01), color-stop(100%,#f86c1f));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#d54d01', endColorstr='#f86c1f',GradientType=0);
+}
+
+/* Black Color Scheme ------------------------ */
+
+.black .button{
+color:#fff;
+text-shadow:1px 1px 0px #111111;
+background:#222222;
+background:-moz-linear-gradient(top, #444444 0%, #222222 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#444444), color-stop(100%,#222222));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444', endColorstr='#222222',GradientType=0);
+border-color:#111111;
+}
+
+.black:hover .button{
+background:#444444;
+background:-moz-linear-gradient(top, #222222 0%, #444444 100%);
+background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#222222), color-stop(100%,#444444));
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#222222', endColorstr='#444444',GradientType=0);
+}</style>
+	    		<script>$(function(){
+	$("input[type=file]").change(function(){$(this).parents(".uploader").find(".filename").val($(this).val());});
+	$("input[type=file]").each(function(){
+	if($(this).val()==""){$(this).parents(".uploader").find(".filename").val("No file selected...");}
+	});
+});
+</script>
+	<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>

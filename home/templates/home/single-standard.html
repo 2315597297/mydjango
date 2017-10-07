@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    {% load staticfiles %}
+   <!--- basic page needs================================================== -->
+   <meta charset="utf-8">
+	<title>Standard Format Post - Abstract</title>
+	<meta name="description" content="">  
+	<meta name="author" content="">
+   <!-- mobile specific metas================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ 	<!-- CSS
+   ================================================== -->
+   <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
+   <link rel="stylesheet" href="{% static 'home/css/vendor.css' %}">
+   <link rel="stylesheet" href="{% static 'home/css/main.css' %}">
+
+
+
+    {# 背景图片模糊滤镜    #}
+   <style type="text/css">
+       .blur {
+            filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+            -webkit-filter: blur(30px); /* Chrome, Opera */
+            -moz-filter: blur(30px);
+            -ms-filter: blur(30px);
+            filter: blur(30px);
+            filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+        }
+   </style>
+   <link rel="shortcut icon" href="{% static 'home/../../../media/../../../mydjango/static/home/images/favicon.ico' %}" type="image/x-icon">
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body id="top">
+   <header class="short-header">
+   	<div class="gradient-block"></div>
+   	<div class="row header-content">
+   		<div class="logo" >
+            {%if user.is_authenticated  %}
+	         <a href="{% url 'online:zhanghao' user.id %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.get_touxiang_url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
+            {% else %}
+         	 <a href="{% url 'online:login' %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({% static 'home/../../../media/../../../mydjango/static/home/images/logo.png' %}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
+            {% endif %}
+	    </div>
+	   	<nav id="main-nav-wrap">
+				<ul class="main-navigation sf-menu">
+					<li class="has-children"><a href="http://www.feiblog.cn/" title="">[主页]</a></li>
+					<li class="has-children">
+						<a href="{% url 'home:showmokuai' %}" title="">[板块]</a>
+					</li>
+					<li class="has-children">
+						<a  href="{% url 'home:leixing' lx_list.0.id %}" title="">[看文章]</a>
+						<ul class="sub-menu">
+			           {% for l in lx_list %}
+                             <li><a href="{% url 'home:leixing' l.id %}">{{ l.name }}</a></li>
+                       {% endfor %}
+                        </ul>
+					</li>
+					 {% if user.is_authenticated  %}
+                         <li class="has-children">
+						    <a  href="{% url 'online:zhanghao' user.id %}" title="">[{{ user.first_name }}]</a>
+						<ul class="sub-menu">
+			            <li><a href="">账户</a></li>
+			            <li><a href="{% url 'blog:add_blog' %}">想到了点骚东西,我要把它写出来</a></li>
+			            <li><a href="{% url 'online:logout' %}">登出</a></li>
+			         </ul>
+                        {% else %}
+                    <li><a href="{% url 'online:login' %}" title="">[登录注册]</a></li>
+                     {% endif %}
+					<li><a href="" title="">[本站说明]</a></li>
+					<li><a href="" title="">[其他酷站]</a></li>
+				</ul>
+			</nav> <!-- end main-nav-wrap -->
+
+			<div class="search-wrap">
+				<form role="search" method="post" class="search-form" enctype="multipart/form-data" action="{% url 'home:seach' %}">{% csrf_token %}
+					<label>
+						<span class="hide-content">Search for:</span>
+						<input type="search" class="search-field" placeholder="Type Your Keywords" value="" name="key" title="Search for:" autocomplete="off">
+					</label>
+					<input type="submit" class="search-submit" value="Search">
+				</form>
+				<a href="#" id="close-search" class="close-btn">Close</a>
+			</div> <!-- end search wrap -->
+
+			<div class="triggers">
+				<a class="search-trigger" href="#"><i class="fa fa-search"></i></a>
+				<a class="menu-toggle" href="#"><span>Menu</span></a>
+			</div> <!-- end triggers -->	
+   		
+   	</div>     		
+   	
+   </header> <!-- end header -->
+
+   <!-- 内容
+   ================================================== -->
+   <section id="content-wrap" class="blog-single">
+       <div class="blur" id="bg_img" style="position:absolute;z-index:-1;width:100%;height:999px;background: url('{{ blog.get_fengmian_url }}');">
+         </div>
+   	<div class="row" style="z-index:100;background-color:#ffffff">
+   		<div class="col-twelve">
+
+   			<article class="format-standard">
+{#{% comment %}todo 单个博客   封面{% endcomment %}#}
+{#   				<div class="content-media">#}
+{#						<div class="post-thumb">#}
+{#							<img src="{{ blog.get_fengmian_url }}">#}
+{#						</div>#}
+{#					</div>#}
+					<div class="primary-content">
+{% comment %}todo  单个博客  标题 {% endcomment %}
+                    </br>
+                    </br>
+						<h1 class="page-title">{{ blog.title }}</h1>
+
+						<ul class="entry-meta">
+							<li class="date">{{ blog.pub_date }}</li>
+							<li class="cat"><a href="{% url 'home:mokuai' blog.bankuai.id %}">{{ blog.bankuai }}</a><a href="{% url 'home:leixing' blog.leixing.id %}">{{blog.leixing}}</a></li>
+						</ul>
+                        {% comment %}todo 单个博客  内容{% endcomment %}
+                            {% autoescape off%}
+                             {{ blog.content }}
+                            {% endautoescape %}
+                        {% comment %} 标签功能  暂未开放{% endcomment %}
+{#						<p class="tags">#}
+{#		  			     	<span>Tagged in :</span>#}
+{#		  				  	<a href="#">orci</a><a href="#">lectus</a><a href="#">varius</a><a href="#">turpis</a>#}
+{#		  			   </p>#}
+
+		  			   <div class="author-profile" >
+                           {% comment %}{% endcomment %}
+                           <a href="{% url 'online:zhanghao' blog.zuozhe.id %}"><img src="{{ blog.zuozhe.profile.get_touxiang_url }}" alt=""></a>
+
+		  			   	<div class="about">
+		  			   		<h4><a href="{% url 'online:zhanghao' blog.zuozhe.id %}">{{ blog.zuozhe.first_name }}</a></h4>
+		  			   	
+		  			   		<p>{{ blog.zuozhe.last_name }}
+		  			   		</p>
+
+		  			   		<ul class="author-social">
+		  			   			<li><a href="#">Ta的文章</a></li>
+						        	<li><a href="#">私聊他</a></li>
+						        	<li><a href="#">GooglePlus</a></li>
+						        	<li><a href="#">Instagram</a></li>
+		  			   		</ul>
+		  			   	</div>
+		  			   </div> <!-- end author-profile -->
+					</div> <!-- end entry-primary -->
+				</article>
+			</div> <!-- end col-twelve -->
+   	</div> <!-- end row -->
+       <br/><br/>
+
+
+		<div class="comments-wrap" id="pinglunlan">
+			<div id="comments" class="row">
+				<div class="col-full">
+               <h3>{{ pinglun_list.count }} 条评论</h3>
+               <!-- commentlist -->
+               <ol class="commentlist">
+
+                  {% for p in pinglun_list %}
+                      <li class="depth-1">
+
+                     <div class="avatar">
+                        <a href="{% url 'online:zhanghao' p.plzhe.id %}"><img width="50" height="50" class="avatar" src="{{ p.plzhe.profile.get_touxiang_url }}" alt=""></a>
+                     </div>
+
+                     <div class="comment-content">
+
+	                     <div class="comment-info">
+	                        <cite>{{ p.plzhe.first_name }}</cite>
+
+	                        <div class="comment-meta">
+	                           <time class="comment-time" datetime="{{ p.pub_date }}">{{ p.pub_date }}</time>
+{#	                           <span class="sep">/</span><a class="reply" href="#">Reply</a>#}
+	                        </div>
+	                     </div>
+
+	                     <div class="comment-text">
+	                        <p>{{ p.pltext }}</p>
+	                     </div>
+
+	                  </div>
+
+                  </li>
+                   {% endfor %}
+               </ol> <!-- Commentlist End -->
+                    {% comment %}todo 发表评论{% endcomment %}
+               <div class="respond" style="z-index: 100">
+
+               	<h3>写下你的评论</h3>
+
+                  <form name="contactForm" id="contactForm" method="post" enctype="multipart/form-data" action = "{% url 'blog:add_pinglun' %}">{% csrf_token %}
+  					   <fieldset>
+                     <div class="message form-field">
+                        <textarea name="pltext" id="cMessage" class="full-width" placeholder="Your Msg" ></textarea>
+                     </div>
+                        <input name="plblog" style="display: none" value="{{ blog.id }}"/>
+                        <input name="plblog" style="display: none" value="{{ blog.id }}"/>
+                        <input name="blogurl" style="display: none" value="http://127.0.0.1:8000{{request.path}}"/>
+                     <button type="submit" class="submit button-primary">提交</button>
+  					   </fieldset>
+  				      </form> <!-- Form End -->
+               </div> <!-- Respond End -->
+         	</div> <!-- end col-full -->
+         </div> <!-- end row comments -->
+		</div> <!-- end comments-wrap -->
+   </section> <!-- end content -->
+
+
+   <!-- footer
+   ================================================== -->
+   <footer>
+
+   	<div class="footer-main">
+
+   		<div class="row">  
+
+	      	<div class="col-four tab-full mob-full footer-info">            
+
+	            <h4>About Our Site</h4>
+
+	               <p>
+		          	Lorem ipsum Ut velit dolor Ut labore id fugiat in ut fugiat nostrud qui in dolore commodo eu magna Duis cillum dolor officia esse mollit proident Excepteur exercitation nulla. Lorem ipsum In reprehenderit commodo aliqua irure labore.
+		          	</p>
+
+		      </div> <!-- end footer-info -->
+
+	      	<div class="col-two tab-1-3 mob-1-2 site-links">
+
+	      		<h4>Site Links</h4>
+
+	      		<ul>
+	      			<li><a href="#">About Us</a></li>
+						<li><a href="#">Blog</a></li>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Terms</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+					</ul>
+
+	      	</div> <!-- end site-links -->  
+
+	      	<div class="col-two tab-1-3 mob-1-2 social-links">
+
+	      		<h4>Social</h4>
+
+	      		<ul>
+	      			<li><a href="#">Twitter</a></li>
+						<li><a href="#">Facebook</a></li>
+						<li><a href="#">Dribbble</a></li>
+						<li><a href="#">Google+</a></li>
+						<li><a href="#">Instagram</a></li>
+					</ul>
+	      	           	
+	      	</div> <!-- end social links --> 
+
+	      	<div class="col-four tab-1-3 mob-full footer-subscribe">
+
+	      		<h4>Subscribe</h4>
+
+	      		<p>Keep yourself updated. Subscribe to our newsletter.</p>
+
+	      		<div class="subscribe-form">
+	      	
+	      			<form id="mc-form" class="group" novalidate="true">
+
+							<input type="email" value="" name="dEmail" class="email" id="mc-email" placeholder="Type &amp; press enter" required=""> 
+	   		
+			   			<input type="submit" name="subscribe" >
+		   	
+		   				<label for="mc-email" class="subscribe-message"></label>
+			
+					</form>
+	      		</div>
+	      	</div> <!-- end subscribe -->
+	      </div> <!-- end row -->
+   	</div> <!-- end footer-main -->
+   </footer>
+
+   <div id="preloader"> 
+    	<div id="loader"></div>
+   </div>
+
+   <script src="{% static 'home/js/jquery-2.1.3.min.js' %}"></script>
+   <script src="{% static 'home/js/plugins.js' %}"></script>
+   <script src="{% static 'home/js/jquery.appear.js' %}"></script>
+   <script src="{% static 'home/js/main.js' %}"></script>
+    {% comment %}用于给背景设置高度{% endcomment %}
+   <script>
+        {% comment %}只到评论栏的{% endcomment %}
+        v1=document.getElementById('content-wrap').scrollHeight
+        v2=document.getElementById('pinglunlan').scrollHeight
+        document.getElementById('bg_img').style.height=(v1-v2)+'px'
+        {% comment %}只到评论栏的{% endcomment %}
+{#        document.getElementById('bg_img').style.height=document.getElementById('content-wrap').scrollHeight+'px'#}
+   </script>
+</body>
+</html>

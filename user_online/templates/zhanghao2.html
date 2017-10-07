@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if user.id == seeuser.id %}
+        <form name = "form" id="isfrom" enctype="multipart/form-data" action = "{% url 'online:upzhanghao' %}" method = "POST" >{% csrf_token %}
+        <div>
+             <H3>头像</H3>
+            <img src="{{ seeuser.profile.get_touxiang_url }}">
+            <input type = "file"  style = "margin-left:20%;" name = "picture" />
+        </div>
+        <div>
+             <H3>昵称</H3>
+               <input type = "text"  style = "margin-left:20%;" name = "nickname" value="{{ seeuser.first_name }}" />
+             <H3>个人介绍</H3>
+               <input type = "text"  style = "margin-left:20%;" name = "jieshao" value="{{ seeuser.last_name }}"/>
+                <H3>身价：{{ seeuser.profile.money }}</H3>
+        </div>
+        <button type="submit"  style="width: 50%;height: 50px">提交修改</button>
+        </form>
+        <H3>文章管理</H3>
+        {% for blog in blogs %}
+            <div>
+
+            <a href="{% url 'blog:show_blog' blog.id %}">{{ blog.title }}</a>
+            <a href="{% url 'blog:drop_blog' blog.id %}">删除</a>
+
+            </div>
+
+        {% endfor %}
+
+        {% else %}
+        <div>
+             <H3>头像</H3>
+            <img src="{{ seeuser.profile.get_touxiang_url }}">
+        </div>
+        <div>
+             <H3>昵称</H3>
+                <H5>{{ seeuser.first_name }}</H5>
+             <H3>个人介绍</H3>
+                <H5>{{ seeuser.last_name }}</H5>
+            <H3>身价：{{ seeuser.profile.money }}</H3>
+        </div>
+        <H3>文章管理</H3>
+        {% for blog in blogs %}
+            <div>
+            <a href="{% url 'blog:show_blog' blog.id %}">{{ blog.title }}</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

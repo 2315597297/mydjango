@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:ime-mode="http://www.w3.org/1999/xhtml">
+<head>
+<title>MOBAN</title>
+<link href="{% load staticfiles %}{% static 'user_online/css/style.css'%}{% load staticfiles %}" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="App Loction Form,Login Forms,Sign up Forms,Registration Forms,News latter Forms,Elements"./>
+<script type="application/x-javascript">
+
+    addEventListener("load", function()
+                            {
+                                setTimeout(hideURLbar, 0);
+                                },
+        false);
+    function hideURLbar(){ window.scrollTo(0,1); }
+    function existuser() {
+        var xmlhttp;
+        if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();}
+        else {// code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");}
+        xmlhttp.onreadystatechange=function() {
+          if (xmlhttp.readyState==4 && xmlhttp.status==200){
+            document.getElementById("existusertext").innerHTML=xmlhttp.responseText;
+          }
+    }
+    xmlhttp.open("POST","/user_online/existuser",true);
+    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xmlhttp.send("user="+document.getElementById('ur').value);
+}
+{#function yanzheng() {#}
+{#    var user=document.getElementsByName('user').value#}
+{#    var passwd= document.getElementsByName('passwd').value#}
+{#    if(user==''&&passwd)#}
+</script>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+        <br/>
+        <br/>
+        <br/>
+		<div class="app-location">
+			<h2>提示：密码不要过于简单</h2>
+			<div class="line"><span></span></div>
+			<div class="location"><img src="{% load staticfiles %}{% static 'user_online/images/location.png' %}{% load staticfiles %}" class="img-responsive" alt="" /></div>
+            <form action="registering" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <a id="existusertext">请输入用户名</a>
+				<input type="text"name="user" id="ur" class="text" value="用户名" onFocus="this.value = '';" onBlur="existuser()" >
+				<input type="password" name="passwd" value="11111111" onFocus="this.value = '';" >
+				<div class="submit"><input type="submit" value="注册" ></div>
+				<div class="clear"></div>
+				<div class="new">
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+	    <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+</body>
+</html>

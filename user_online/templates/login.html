@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MOBAN</title>
+<link href="{% load staticfiles %}{% static 'user_online/css/style.css'%}{% load staticfiles %}" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="App Loction Form,Login Forms,Sign up Forms,Registration Forms,News latter Forms,Elements"./>
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+        <br/>
+        <br/>
+        <br/>
+		<div class="app-location">
+			<h2>您还没有登录，请先登录吧</h2>
+			<div class="line"><span></span></div>
+			<div class="location"><img src="{% load staticfiles %}{% static 'user_online/images/location.png' %}{% load staticfiles %}" class="img-responsive" alt="" /></div>
+            <form action="logining" method="post" enctype="multipart/form-data">{% csrf_token %}
+				<input type="text" name='user' class="text" value="用户名" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '用户名';}" >
+				<input type="password" name='passwd' value="11111111" onFocus="this.value = '';" onBlur="if (this.value == '') {this.value = '11111111';}">
+				<div class="submit"><input type="submit"  value="登录" ></div>
+				<div class="clear"></div>
+				<div class="new">
+					<h3><a onclick="alert('并没有找回密码的功能，重新去建一个吧')">忘记密码?</a></h3>
+					<h4><a href="{% url 'online:register' %}">注册新账号</a></h4>
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+	    <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+</body>
+</html>
