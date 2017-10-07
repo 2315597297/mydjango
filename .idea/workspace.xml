@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4fb4efb6-8f41-40f2-bfa1-59bfe74a4d35" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/blog/templates/ss.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cent.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/a.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/about.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/contact.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/single-audio.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/single-gallery.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/single-video.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/home/templates/home/style-guide.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/templates/admin/base_site.html" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blog/templates/add_blog.html" afterPath="$PROJECT_DIR$/blog/templates/add_blog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/blog/views.py" afterPath="$PROJECT_DIR$/blog/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/seach.py" afterPath="$PROJECT_DIR$/home/seach.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/category.html" afterPath="$PROJECT_DIR$/home/templates/home/category.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/category_bankuai.html" afterPath="$PROJECT_DIR$/home/templates/home/category_bankuai.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/category_l.html" afterPath="$PROJECT_DIR$/home/templates/home/category_l.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/category_seach.html" afterPath="$PROJECT_DIR$/home/templates/home/category_seach.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/index.html" afterPath="$PROJECT_DIR$/home/templates/home/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/templates/home/single-standard.html" afterPath="$PROJECT_DIR$/home/templates/home/single-standard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home/views.py" afterPath="$PROJECT_DIR$/home/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mydjango/settings.py" afterPath="$PROJECT_DIR$/mydjango/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_online/templates/login.html" afterPath="$PROJECT_DIR$/user_online/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_online/templates/register.html" afterPath="$PROJECT_DIR$/user_online/templates/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_online/templates/zhanghao.html" afterPath="$PROJECT_DIR$/user_online/templates/zhanghao.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/user_online/views.py" afterPath="$PROJECT_DIR$/user_online/views.py" />
-    </list>
+    <list default="true" id="4fb4efb6-8f41-40f2-bfa1-59bfe74a4d35" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -856,7 +829,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2655068" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
