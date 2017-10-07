@@ -147,16 +147,17 @@
 		<div class="md-modal md-effect-2" id="modal-2">
 			<div class="md-content">
 				<h3>能改的就这些，先将就用以后会更新</h3>
-				  <form name = "form" id="isfrom" enctype="multipart/form-data" action = "/user_online/upzhanghao" method = "POST" ><input type='hidden' name='csrfmiddlewaretoken' value='ryimjdJNeuQiMALi5P1pjwnyT1hHJCOTG61LVZglal4wbjNUeAztlSyBjF8DCFLj' />
+				  <form name = "form" id="isfrom" enctype="multipart/form-data" action = "/user_online/upzhanghao" method = "POST" >
+                      {% csrf_token %}
 					<div>
 						 <H5>头像</H5>
 						<input type = "file"  style = "margin-left:20%;" name = "picture" />
 					</div>
 					<div>
 						 <H5>昵称</H5>
-						 <input type = "text"  style = "margin-left:20%;" name = "nickname" value="徐成飞" />
+						 <input type = "text"  style = "margin-left:20%;" name = "nickname" value="{{ seeuser.first_name }}" />
 						 <H5>个人介绍</H5>
-						 <input type = "text"  style = "margin-left:20%;" name = "jieshao" value="我就是这么NBs"/>
+						 <input type = "text"  style = "margin-left:20%;" name = "jieshao" value="{{ seeuser.last_name }}"/>
 					</div>
 					<button type="submit"  style="width: 50%;height: 50px">提交修改</button>
 					</form>
