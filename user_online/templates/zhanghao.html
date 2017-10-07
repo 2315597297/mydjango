@@ -2,13 +2,14 @@
 <html>
 <head>
     {% load staticfiles %}
-<title>Mark Profile Responsive Widget Template  :: w3layouts</title>
+<title>{{ seeuser.first_name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Mark Profile Widget Tab Form,Login Forms,Sign up Forms,Registration Forms,News letter Forms,Elements"/>
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <link href="{% static 'user_online/zhanghao/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
 <link rel="stylesheet" href="{% static 'user_online/zhanghao/css/style.css' %}" media="screen" type="text/css" />
+<link rel="icon" href="{% static 'home/images/favicon.ico' %}" type="image/x-icon">
 <script type="text/javascript" src="{% static 'user_online/zhanghao/js/jquery.min.js' %}"></script>
 <style>
      body {background-image:url({{ seeuser.profile.get_touxiang_url }}); background-repeat:no-repeat;
@@ -80,7 +81,7 @@
                                     <div class="hobby-info">
 											  {% for blog in blogs %}
                                                     <div>
-                                                    <a href="{% url 'blog:show_blog' blog.id %}"><H5>{{ blog.title }}</H5></a>
+                                                    <a href="{% url 'blog:show_blog' blog.id %}" target="_blank"><H5>{{ blog.title }}</H5></a>
                                                         {% if user.id == seeuser.id %}
                                                         <a href="{% url 'blog:drop_blog' blog.id %}">删除</a>
                                                         {% endif %}

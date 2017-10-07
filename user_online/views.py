@@ -55,7 +55,7 @@ def registering(request):
         user=request.POST.get('user')
         passwd= request.POST.get('passwd')
         if passwd.__len__()<8:
-            return HttpResponse('密码请大于8位 不要枢无意义的中文，数据库能存但以后会出问题')
+            return HttpResponse('密码请大于8位 拥有字母和数字及特殊字符 不要输入无意义的中文，数据库能存但以后会出问题')
         # (username = user, password = passwd, first_name = user, last_name = '这个人很懒没有个人签名')
         u = User.objects.create_user(user,'999@iox.mns',passwd)
         u.save()
@@ -75,7 +75,7 @@ def existuser(request):
     if user =='':
         return HttpResponse('你输入的用户名不和谐')
     weijin_list=[
-        '江泽民','徐成','飞','None','NULL','null',' '
+        '江泽民','徐成','成飞','徐飞','None','NULL','null',' '
     ]
     for weijin in weijin_list:
         if weijin in user:

@@ -6,7 +6,7 @@
     {% load staticfiles %}
    <!--- basic page needs================================================== -->
    <meta charset="utf-8">
-	<title>Standard Format Post - Abstract</title>
+	<title>{{ blog.title }}</title>
 	<meta name="description" content="">  
 	<meta name="author" content="">
    <!-- mobile specific metas================================================== -->
@@ -16,8 +16,7 @@
    <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
    <link rel="stylesheet" href="{% static 'home/css/vendor.css' %}">
    <link rel="stylesheet" href="{% static 'home/css/main.css' %}">
-
-
+<link rel="icon" href="{% static 'home/images/favicon.ico' %}" type="image/x-icon">
 
     {# 背景图片模糊滤镜    #}
    <style type="text/css">
@@ -30,8 +29,6 @@
             filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
         }
    </style>
-   <link rel="shortcut icon" href="{% static 'home/../../../media/../../../mydjango/static/home/images/favicon.ico' %}" type="image/x-icon">
-   <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body id="top">
@@ -40,7 +37,7 @@
    	<div class="row header-content">
    		<div class="logo" >
             {%if user.is_authenticated  %}
-	         <a href="{% url 'online:zhanghao' user.id %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.get_touxiang_url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
+	         <a href="{% url 'online:zhanghao' user.id %}" target="_blank" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.get_touxiang_url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
             {% else %}
          	 <a href="{% url 'online:login' %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({% static 'home/../../../media/../../../mydjango/static/home/images/logo.png' %}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
             {% endif %}
@@ -61,17 +58,17 @@
 					</li>
 					 {% if user.is_authenticated  %}
                          <li class="has-children">
-						    <a  href="{% url 'online:zhanghao' user.id %}" title="">[{{ user.first_name }}]</a>
+						    <a  href="{% url 'online:zhanghao' user.id %}" target="_blank" title="">[{{ user.first_name }}]</a>
 						<ul class="sub-menu">
-			            <li><a href="">账户</a></li>
-			            <li><a href="{% url 'blog:add_blog' %}">想到了点骚东西,我要把它写出来</a></li>
+			            <li><a href="{% url 'online:zhanghao' user.id %}" target="_blank">账户</a></li>
+			            <li><a href="{% url 'blog:add_blog' %}" target="_blank">写文章</a></li>
 			            <li><a href="{% url 'online:logout' %}">登出</a></li>
 			         </ul>
                         {% else %}
                     <li><a href="{% url 'online:login' %}" title="">[登录注册]</a></li>
                      {% endif %}
-					<li><a href="" title="">[本站说明]</a></li>
-					<li><a href="" title="">[其他酷站]</a></li>
+					<li><a href="" title="" target="_blank">[本站说明]</a></li>
+					<li><a href="" title="" target="_blank">[其他酷站]</a></li>
 				</ul>
 			</nav> <!-- end main-nav-wrap -->
 
@@ -132,10 +129,10 @@
 
 		  			   <div class="author-profile" >
                            {% comment %}{% endcomment %}
-                           <a href="{% url 'online:zhanghao' blog.zuozhe.id %}"><img src="{{ blog.zuozhe.profile.get_touxiang_url }}" alt=""></a>
+                           <a href="{% url 'online:zhanghao' blog.zuozhe.id %}" target="_blank"><img src="{{ blog.zuozhe.profile.get_touxiang_url }}" alt=""></a>
 
 		  			   	<div class="about">
-		  			   		<h4><a href="{% url 'online:zhanghao' blog.zuozhe.id %}">{{ blog.zuozhe.first_name }}</a></h4>
+		  			   		<h4><a href="{% url 'online:zhanghao' blog.zuozhe.id %}" target="_blank">{{ blog.zuozhe.first_name }}</a></h4>
 		  			   	
 		  			   		<p>{{ blog.zuozhe.last_name }}
 		  			   		</p>

@@ -1,24 +1,24 @@
 import datetime
-
-import re
 import threading
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
-from django.template import Context
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# Create your views here.
 from django.views.decorators.http import require_http_methods
-
 from blog.models import Blog, Bankuai, Leixing
 from home.seach import set_blog_context, get_seach_view
 from media.bg_dir.get_pic import get_pic_url
-from user_online.models import User
 #得到首页轮播推荐文章的算法
 #推荐list
-lunbo_blog_list=[354,955,1030,]
 def gettuijian():
+    # 可以内定的博客位
+    neiding=[354,955,1030]
+    lunbo_blog_list=[]
+    # 转为blog对象，方便操作
+    for bid in lunbo_blog_list:
+        lunbo_blog_list.append(Blog.objects.get(id=bid))
     def getguankanblog(count):
-        Blog.objects.order_by()
+        return Blog.objects.order_by('-yuedu')[:count]
+    return getguankanblog(5)
 # 分页页码
 pagenum=16
 # 得到分类和板块数据的方法
@@ -32,7 +32,7 @@ def getContext(blogs,page,context):
     page = int(page)
     blogs_sum = len(blogs.all())
     if blogs_sum < ((page - 1) * pagenum):
-        return
+        return False
     end = blogs_sum if blogs_sum < page * pagenum else page * pagenum
     context['zuixinbokewei'] = blogs.order_by('-pub_date')[(page - 1) * pagenum: end]
     web_page_sum = (blogs_sum // pagenum) + (1 if blogs_sum % pagenum > 0 else 0)
@@ -51,6 +51,8 @@ def homepage(request,page=1):
     context = {}
     #全体博客list
     context=getContext(blogs, page, context)
+    if page==1:
+        context['tuijian']=gettuijian()
     # context['pagenum'] = range(1,Paginator.num_pages)
     # print(Paginator.num_pages)
     # userlist=User.objects.order_by('money')[:5]

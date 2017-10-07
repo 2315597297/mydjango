@@ -5,48 +5,44 @@
 <html class="no-js" lang="en" xmlns:background="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
 <head>
     {% load staticfiles %}
-   <meta charset="utf-8">
-    <title>Abstract</title>
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-   <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
-   <link rel="stylesheet" href="{% static 'home/css/vendor.css' %}">
-   <link rel="stylesheet" href="{% static 'home/css/main.css' %}">
+    <meta charset="utf-8">
+    <title>Abstract-{{ text }}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'home/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/vendor.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/main.css' %}">
+    <link rel="shortcut icon" href="{% static 'home/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-	<script src="{%  static 'home/js/modernizr.js' %}"></script>
-	<script src="{%  static 'home/js/pace.min.js' %}"></script>
+    <script src="{%  static 'home/js/modernizr.js' %}"></script>
+    <script src="{%  static 'home/js/pace.min.js' %}"></script>
 
-           <link rel="shortcut icon" href="{% static 'home/images/favicon.ico' %}" type="image/x-icon">
-	        <link rel="icon" href="favicon.ico" type="image/x-icon">
-     {# 背景图片模糊滤镜    #}
-   <style type="text/css">
-       .blur {
-            filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
-            -webkit-filter: blur(6px); /* Chrome, Opera */
-            -moz-filter: blur(6px);
-            -ms-filter: blur(6px);
-            filter: blur(6px);
-            filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
-        }
-   </style>
+
+    {# 背景图片模糊滤镜    #}
+    <style type="text/css">
+    .blur {
+    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+    -webkit-filter: blur(6px); /* Chrome, Opera */
+    -moz-filter: blur(6px);
+    -ms-filter: blur(6px);
+    filter: blur(6px);
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=10, MakeShadow=false); /* IE6~IE9 */
+    }
+    </style>
     {% load staticfiles %}
 </head>
 
 <body id="top" onload="sethei()">
- <div class="blur" id="bg_img" style="position:absolute;z-index:-1;width:100%;background: url('{{ bg_img }}');">
-         </div>
+{% comment %}背景模糊模块{% endcomment %}
+ <div class="blur" id="bg_img" style="position:absolute;z-index:-1;width:100%;background: url('{{ bg_img }}');"></div>
    <header class="short-header">
-
    	<div class="gradient-block"></div>
-
    	<div class="row header-content">
-
-
-
    		<div class="logo" >
             {%if user.is_authenticated  %}
-	         <a href="{% url 'online:zhanghao' user.id %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.touxiang.url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
+	         <a href="{% url 'online:zhanghao' user.id %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.touxiang.url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;" target="_blank">{{ user.username }}</a>
              {% else %}
          	 <a href="{% url 'online:login' %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({% static 'home/../../../media/../../../mydjango/static/home/images/logo.png' %}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
        {% endif %}
@@ -67,20 +63,18 @@
 					</li>
 					 {% if user.is_authenticated  %}
                          <li class="has-children">
-						    <a  href="{% url 'online:zhanghao' user.id %}" title="">[{{ user.first_name }}]</a>
+						    <a  href="{% url 'online:zhanghao' user.id %}" title="" target="_blank">[{{ user.first_name }}]</a>
 						<ul class="sub-menu">
-			            <li><a href="{% url 'online:zhanghao' user.id %}">账户</a></li>
-			            <li><a href="{% url 'blog:add_blog' %}">想到了点骚东西,我要把它写出来</a></li>
+			            <li><a href="{% url 'online:zhanghao' user.id %}" target="_blank">账户</a></li>
+			            <li><a href="{% url 'blog:add_blog' %}" target="_blank">写文章</a></li>
 			            <li><a href="{% url 'online:logout' %}">登出</a></li>
 			         </ul>
                         {% else %}
                     <li><a href="{% url 'online:login' %}" title="">[登录注册]</a></li>
                      {% endif %}
-					<li><a href="" title="">[本站说明]</a></li>
-					<li><a href="" title="">[其他酷站]</a></li>
+					<li><a href="" title="" target="_blank">[本站说明]</a></li>
+					<li><a href="" title="" target="_blank">[其他酷站]</a></li>
 				</ul>
-
-
 			</nav> <!-- end main-nav-wrap -->
 
 		<div class="search-wrap">
@@ -129,7 +123,7 @@
                 <article class="brick entry format-standard animate-this">
                    <div class="entry-thumb">
                        {% comment %}图片{% endcomment %}
-                      <a href="{% url 'blog:show_blog' blog.id%}" class="thumb-link">
+                      <a href="{% url 'blog:show_blog' blog.id%} " target="_blank"class="thumb-link">
                               <img src="{{ blog.get_fengmian_url }}" alt="building">
                       </a>
                    </div>
@@ -137,11 +131,11 @@
                         <div class="entry-header">
                             <div class="entry-meta">
                                 <span class="cat-links">
-                                    <a href="{% url 'online:zhanghao' blog.zuozhe.id %}">{{ blog.zuozhe.first_name }}</a>{% comment %}用户{% endcomment %}
+                                    <a href="{% url 'online:zhanghao' blog.zuozhe.id %}" target="_blank">{{ blog.zuozhe.first_name }}</a>{% comment %}用户{% endcomment %}
                                     <a href="{% url 'home:mokuai' blog.bankuai.id %}">{{ blog.bankuai }}</a>{% comment %}板块{% endcomment %}
                                 </span>
                             </div>{% comment %}标题{% endcomment %}
-                            <h1 class="entry-title"><a href="{% url 'blog:show_blog' blog.id%}">{{ blog.get_title }}</a></h1>
+                            <h1 class="entry-title"><a href="{% url 'blog:show_blog' blog.id%}" target="_blank">{{ blog.get_title }}</a></h1>
                         </div>
                             <div class="entry-excerpt">{% comment %}内容摘要{% endcomment %}
                                  {{ blog.get_content }}
@@ -215,7 +209,7 @@
                                     {% endif %}
         {% endif %}
             {% else %}
-            <H3>该分类没有没有相关文章。<a href="{% url 'blog:add_blog' %}">去创建</a></H3>
+            <H3>该分类没有没有相关文章。<a href="{% url 'blog:add_blog' %}" target="_blank">去创建</a></H3>
         {% endif %}
 {% comment %}分页吗的模板功能{% endcomment %}
 	      </nav>

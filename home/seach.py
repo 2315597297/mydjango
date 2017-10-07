@@ -103,7 +103,7 @@ def get_seach_view(blog_list,key):
             <article class="brick entry format-standard animate-this"  id='one_test' >
             <div class="entry-thumb">
                     <!-- 1 blogid -->
-            <a href="%s" class="thumb-link">
+            <a href="%s" class="thumb-link" target="_blank">
                     <!-- 2 图片地址-->
             <img src="%s" alt="building">
             </a>
@@ -113,13 +113,13 @@ def get_seach_view(blog_list,key):
             <div class="entry-meta">
             <span class="cat-links">
             <!--3 作者id  4 作者名-->
-            <a href="%s">%s</a>
+            <a href="%s" target="_blank">%s</a>
             <!--5 板块id  6 板块名-->
-            <a href="%s">%s</a>
+            <a href="%s" target="_blank">%s</a>
             </span>
             </div>
                                     <!--7 博客id  8 博客名-->
-            <h1 class="entry-title"><a href="%s">%s</a></h1>
+            <h1 class="entry-title" target="_blank"><a href="%s">%s</a></h1>
             </div>
             <div class="entry-excerpt">
             <!--  9 内容摘要-->

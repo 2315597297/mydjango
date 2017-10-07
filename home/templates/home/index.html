@@ -43,7 +43,7 @@
    	<div class="row header-content">
    		<div class="logo" >
             {%if user.is_authenticated  %}
-	         <a href="{% url 'online:zhanghao' user.id %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.get_touxiang_url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
+	         <a href="{% url 'online:zhanghao' user.id %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({{ user.profile.get_touxiang_url }}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;" target="_blank">{{ user.username }}</a>
              {% else %}
          	         <a href="{% url 'online:login' %}" style="display: block;margin: 0;padding: 0;outline: 0;border: none;width: 60px;height: 60px;background: url({% static 'home/../../../media/../../../mydjango/static/home/images/logo.png' %}) no-repeat center;background-size: 60px 60px;font: 0/0 a;text-shadow: none;color: transparent;-moz-transition: all 0.5s ease-in-out;-o-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;">{{ user.username }}</a>
        {% endif %}
@@ -64,17 +64,17 @@
 					</li>
 					 {% if user.is_authenticated  %}
                          <li class="has-children">
-						    <a  href="{% url 'online:zhanghao' user.id %}" title="">[{{ user.first_name }}]</a>
+						    <a  href="{% url 'online:zhanghao' user.id %}" title="" target="_blank">[{{ user.first_name }}]</a>
 						<ul class="sub-menu">
-			            <li><a href="{% url 'online:zhanghao' user.id %}">账号</a></li>
-			            <li><a href="{% url 'blog:add_blog' %}">想到了点骚东西,我要把它写出来</a></li>
+			            <li><a href="{% url 'online:zhanghao' user.id %}" target="_blank">账号</a></li>
+			            <li><a href="{% url 'blog:add_blog' %}" target="_blank">写文章</a></li>
 			            <li><a href="{% url 'online:logout' %}">登出</a></li>
 			         </ul>
                         {% else %}
                     <li><a href="{% url 'online:login' %}" title="">[登录注册]</a></li>
                      {% endif %}
-					<li><a href="" title="">[本站说明]</a></li>
-					<li><a href="" title="">[其他酷站]</a></li>
+					<li><a href="" title="" target="_blank">[本站说明]</a></li>
+					<li><a href="" title="" target="_blank">[其他酷站]</a></li>
 				</ul>
 
 
@@ -107,48 +107,52 @@
    <!-- masonry
    ================================================== -->
    <section id="bricks" >
-   	<div class="row masonry blur2" id = 'is_text' >
+   	<div class="row masonry" id = 'is_text' >
 
    		<!-- brick-wrapper -->
          <div class="bricks-wrapper">
-
+        {% comment %}这个坚决不能删{% endcomment %}
          	<div class="grid-sizer"></div>
 
-         	<div class="brick entry featured-grid animate-this">
+         	{% if tuijian %}
+                <div class="brick entry featured-grid animate-this">
                 {% comment %}todo轮播{% endcomment %}
-         		<div class="entry-content">
+
+                    <div class="entry-content">
          			<div id="featured-post-slider" class="flexslider">
 			   			<ul class="slides">
-
+                            {% for b in tuijian %}
 				   			<li>
 				   				<div class="featured-post-slide">
 
-						   			<div class="post-background" style="background-image:url('images/thumbs/featured/featured-1.jpg');"></div>
+						   			<div class="post-background" style="background-image:url({{ b.get_fengmian_url }});"></div>
 
-								   	<div class="overlay"></div>			   		
+								   	<div class="overlay"></div>
 
 								   	<div class="post-content">
 								   		<ul class="entry-meta">
-												<li>September 06, 2016</li> 
-												<li><a href="#" >Naruto Uzumaki</a></li>				
-											</ul>	
+												<li>{{ b.pub_date }}</li>
+												<li><a href="{% url 'online:zhanghao' b.zuozhe.id %}" target="_blank">{{ b.zuozhe.first_name }}</a></li>
+											</ul>
 
-								   		<h1 class="slide-title"><a href="single-standard.html" title="">Minimalism Never Goes Out of Style</a></h1> 
-								   	</div> 				   					  
-				   			
+								   		<h1 class="slide-title"><a href="{% url 'blog:show_blog' b.id %}" target="_blank" title="">{{ b.title }}</a></h1>
+								   	</div>
+
 				   				</div>
 				   			</li> <!-- /slide -->
-
+                            {% endfor %}
 				   		</ul> <!-- end slides -->
-				   	</div> <!-- end featured-post-slider -->        			
-         		</div> <!-- end entry content -->         		
+				   	</div> <!-- end featured-post-slider -->
+         		</div> <!-- end entry content -->
+
          	</div>
+            {% endif %}
 
             {% for blog in zuixinbokewei %}
                 <article class="brick entry format-standard animate-this">
                    <div class="entry-thumb">
                        {% comment %}图片{% endcomment %}
-                      <a href="{% url 'blog:show_blog' blog.id%}" class="thumb-link">
+                      <a href="{% url 'blog:show_blog' blog.id%}" class="thumb-link" target="_blank">
                           <img src="{{ blog.get_fengmian_url }}" alt="building">
                       </a>
                    </div>
@@ -156,11 +160,11 @@
                         <div class="entry-header">
                             <div class="entry-meta">
                                 <span class="cat-links">
-                                    <a href="{% url 'online:zhanghao' blog.zuozhe.id %}">{{ blog.zuozhe.first_name }}</a>{% comment %}用户{% endcomment %}
+                                    <a href="{% url 'online:zhanghao' blog.zuozhe.id %}" target="_blank">{{ blog.zuozhe.first_name }}</a>{% comment %}用户{% endcomment %}
                                     <a href="{% url 'home:mokuai' blog.bankuai.id %}">{{ blog.bankuai }}</a>{% comment %}板块{% endcomment %}
                                 </span>
                             </div>{% comment %}标题{% endcomment %}
-                            <h1 class="entry-title" id ='biaoti'><a href="{% url 'blog:show_blog' blog.id%}">{{ blog.get_title }}</a></h1>
+                            <h1 class="entry-title" id ='biaoti'><a href="{% url 'blog:show_blog' blog.id%}" target="_blank">{{ blog.get_title }}</a></h1>
                         </div>
                             <div class="entry-excerpt" id = 'neiyong'>{% comment %}内容摘要{% endcomment %}
                                  {{ blog.get_content }}

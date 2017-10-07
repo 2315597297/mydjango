@@ -2,9 +2,16 @@
 <html>
 	<head>
         {%  load staticfiles %}
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
         <link href="{% static 'cz_bolg/summernote.css' %}" rel="stylesheet"/>
+        <link rel='stylesheet' type='text/css' href='{% static 'cz_bolg/checked.min.css' %}' />
+        <link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/normalize.css' %}" />
+        {#<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/checked.min.css' %}fonts/font-awesome-4.2.0/css/font-awesome.min.css" />#}
+        <link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/demo.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/component.css' %}" />
+        <link rel="icon" href="{% static 'home/images/favicon.ico' %}" type="image/x-icon">
+
         <style>
         .note-alarm {
         float: right;
@@ -12,72 +19,69 @@
         margin-right: 10px;
         }
         </style>
-        <link rel='stylesheet' type='text/css' href='{% static 'cz_bolg/checked.min.css' %}' />
-        <link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/normalize.css' %}" />
-{#		<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/checked.min.css' %}fonts/font-awesome-4.2.0/css/font-awesome.min.css" />#}
-		<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/demo.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'cz_bolg/component.css' %}" />
-        	<script src="{% static 'cz_bolg/classie.js' %}"></script>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
-<script src="{% static 'cz_bolg/summernote.js' %}"></script>
-<script src="{% static 'cz_bolg/lang/summernote-zh-CN.js' %}"></script>    <!-- 中文-->
-<script>
-$(function(){
-    document.getElementsByName("bankuai")[0].checked=true;
-    document.getElementsByName('leixing')[0].checked=true;
-});
-function sb() {
-    var code =$('.summernote').summernote('code')
-    var title = document.getElementById('input-35').value
-    var fm = document.getElementById('fengmian').value
-    if (code==''||title==''||fm==''){
-        alert('请将信息填写完整')
-    }else{
-        document.getElementById('con').value=code;
-        document.getElementById('isfrom').submit()
-    }
 
-}
-</script>
-	<title>分享你的经验</title>
+        <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+        <script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+
+        <script src="{% static 'cz_bolg/classie.js' %}"></script>
+        <script src="{% static 'cz_bolg/summernote.js' %}"></script>
+        <script src="{% static 'cz_bolg/lang/summernote-zh-CN.js' %}"></script>    <!-- 中文-->
+        <script>
+            $(function(){
+                document.getElementsByName("bankuai")[0].checked=true;
+                document.getElementsByName('leixing')[0].checked=true;
+            });
+            function sb() {
+                var code =$('.summernote').summernote('code')
+                var title = document.getElementById('input-35').value
+                var fm = document.getElementById('fengmian').value
+                if (code==''||title==''||fm==''){
+                    alert('请将信息填写完整')
+                }else{
+                    document.getElementById('con').value=code;
+                    document.getElementById('isfrom').submit()
+                }
+
+            }
+        </script>
         {%  load staticfiles %}
-	</head>
-	<body style="background-color:#F5F5F5">
-    <form name = "form" id="isfrom" enctype="multipart/form-data" action = "{% url 'blog:save_blog' %}" method = "POST" >{% csrf_token %}
-        <span class="input input--kaede">
-            <input type = "text" class="input__field input__field--kaede"  name = "title" id="input-35" />
-            <label class="input__label input__label--kaede" for="input-35">
-                <span class="input__label-content input__label-content--kaede">标题</span>
-            </label>
-        </span>
-        <div class="uploader white" style="margin-left: 20px">
-        <input type="text" class="filename" id="filename" readonly/>
-        <input type="button" name="file" class="button"  value="选择博客封面(必填)..."/>
-        <input type="file" name = "picture" id="fengmian" size="30"/>
-        </div>
-        <div style="margin-left: 20px">
-            选择板块
-            {% for b in Bankuai %}
+<title>分享你的经验</title>
+</head>
+<body style="background-color:#F5F5F5">
+<form name = "form" id="isfrom" enctype="multipart/form-data" action = "{% url 'blog:save_blog' %}" method = "POST" >{% csrf_token %}
+    <span class="input input--kaede">
+        <input type = "text" class="input__field input__field--kaede"  name = "title" id="input-35" />
+        <label class="input__label input__label--kaede" for="input-35">
+            <span class="input__label-content input__label-content--kaede">标题</span>
+        </label>
+    </span>
+    <div class="uploader white" style="margin-left: 20px">
+    <input type="text" class="filename" id="filename" readonly/>
+    <input type="button" name="file" class="button"  value="选择博客封面(必填)..."/>
+    <input type="file" name = "picture" id="fengmian" size="30"/>
+    </div>
+    <div style="margin-left: 20px">
+        选择板块
+        {% for b in Bankuai %}
 
-                <label>
-                    <input name="bankuai" type="radio" value="{{ b.id }}"class="checked-vertigo" />{{ b.name }}
-                </label>
-            {% endfor %}
-        </div>
-        <div style="margin-left: 20px">
-            选择文章类型
-            {% for l in Leixing %}
-                <label><input name="leixing" type="radio" value="{{ l.id }}"class="checked-vertigo"  />{{ l.name }}</label>
-            {% endfor %}
-        </div>
-        <input type="text" id="con" style="display:none" name="content"/>
-         <div id="summer" >
-            <div class="summernote">summernote 1</div>
-        </div>
-        <button type="button" style="width: 100%;height: 30px" onclick="sb()">提交</button>
-    </form>
-	</body>
+            <label>
+                <input name="bankuai" type="radio" value="{{ b.id }}"class="checked-vertigo" />{{ b.name }}
+            </label>
+        {% endfor %}
+    </div>
+    <div style="margin-left: 20px">
+        选择文章类型
+        {% for l in Leixing %}
+            <label><input name="leixing" type="radio" value="{{ l.id }}"class="checked-vertigo"  />{{ l.name }}</label>
+        {% endfor %}
+    </div>
+    <input type="text" id="con" style="display:none" name="content"/>
+     <div id="summer" >
+        <div class="summernote">summernote 1</div>
+    </div>
+    <button type="button" style="width: 100%;height: 30px" onclick="sb()">提交</button>
+</form>
+</body>
 <script type="text/javascript">
 
 $(document).ready(function() {

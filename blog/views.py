@@ -85,9 +85,6 @@ def save_blog(request):
     except Exception as e:
         return HttpResponse('保存失败！</br>非常抱歉，请将下方您编写的博客存根保存下来，或复制到编写区重新编写提交</br>注意！如果是重新编写可以直接复制到文本编辑区，如果是保存的话因为本站博客存根为HTML代码，不要直接保存在txt文本文档中，必要时可以右键查看源代码保存</br></br>'+content)
 
-
-
-
 #-----------------------------------删除博客  【提交请求】
 @login_required
 def drop_blog(request,id):
