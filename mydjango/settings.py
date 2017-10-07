@@ -124,11 +124,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-STATIC_ROOT='C:/Users/xu/PycharmProjects/mydjango/mydjango/static'
+#有些可能读取不了这个地址，从而建立不了映射  可以修改为
+#STATIC_ROOT='C:/Users/xu/PycharmProjects/mydjango/mydjango/static'
+STATIC_ROOT='mydjango/static/'
 STATIC_URL = '/static/'
 MEDIA_ROOT = 'media/'
 #网站绝对地址  自己用
-wangzhi = 'http://127.0.0.1:8000/'
+#todo 网站的地址，这个一定要修改
+wangzhi = 'www.feiblog.cn'
 #网站类型管理员索引
 admin_leixing='admin'
 MEDIA_URL = 'media/'
